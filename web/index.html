@@ -5,51 +5,81 @@
   <meta charset="utf-8">
   <title>Dockerized Posts</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 </head>
 
 <body>
-  <h1>Dockerized Posts</h1>
-  
-  <div id="posts"></div>
-  <button id="load">
-    Load mare
-  </button>
-  <script>
-    $(document).ready(function() {
-      var item = [];
-      var len = 5
-      
-      callApi(len)
+  <div class="container">
+    <!-- Content here -->
+    <h1>แจ้งเตือน</h1>
+    <div id="posts">
+      <div class="container" id="card">
+        <!-- <img src="${listItem[i].textId}" class="card-img-top"> -->
+      </div>
+    </div>
+    <div style="text-align: right; padding: 10px;">
+      <button type="button" class="btn btn-default" id="load">
+        Load mare
+      </button>
+    </div>
+    <script>
+      $(document).ready(function () {
+        var item = [];
+        var len = 5
 
-      function callApi(len) {
-        console.log(len)
-        
-        for (let index = len-4; index <= len; index++) {
-        $.get('http://localhost:8080/posts/'+index, (res) => {
-          item.push(res)
-          if(item.length == 5)
-            lenderItem(item)
-        });
-      }
-      }
+        callApi(len)
 
-      function lenderItem(listItem) {
-        console.log(listItem)
-        $list = $('#posts')
-          for (var i = 0; i < listItem.length; i++) {
-            $list.append('<p>' + listItem[i].textId + '</p>');
-            $list.append('<p>' + listItem[i].Tag + '</p>');
-            $list.append('<p>' + listItem[i].Title + '</p>');
+        function callApi(len) {
+          console.log(len)
+
+          for (let index = len - 4; index <= len; index++) {
+            $.get('http://localhost:8080/posts/' + index, (res) => {
+              item.push(res)
+              if (item.length == 5)
+                lenderItem(item)
+            });
           }
-          item = [];
-      }
+        }
 
-      $("#load").click(function(){
-        callApi(len+5)
-  });
+        function lenderItem(listItem) {
+          console.log(listItem)
+          $list = $('#list')
+          var imglunch = $('<img />');
+          for (var i = 0; i < listItem.length; i++) {
+            $("#card").append(
+              `<div class="card border-secondary mb-3"style="border-style: ridge;">
+              <div class="row">
+          <div class="col-sm-3">
+            <div class="card-body">
+            <div style="border-style: ridge; text-align: center;">
+              <img src="https://www.pngkit.com/png/full/351-3517528_unknown-png-copyleft-svg.png" style="width:50%">
+            </div>
+            </div>
+          </div>
+          <div class="col-sm-9">
+            <div class="card-body" id="list">
+              <h4 class="card-title"> ${listItem[i].Tag} </h4>
+              <p class="card-text"> ${listItem[i].Title} </p>
+            </div>
+          </div>
+        </div>
+        </div>`
+        );
+          }
+          item = []
+          len += 5
+        }
 
-    });
-  </script>
+        $("#load").click(function () {
+          console.log("click load +> " + len)
+          callApi(len)
+        });
+
+      });
+    </script>
 </body>
+</div>
 
 </html>

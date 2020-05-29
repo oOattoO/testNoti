@@ -53,8 +53,6 @@ func main() {
 func readPosts(w http.ResponseWriter, r *http.Request) {
 	result := Post{}
 	eventID := mux.Vars(r)["id"]
-	fmt.Println(eventID)
-	// Find(bson.M{"text": "test"}).One(&testting)
 	if err := posts.Find(bson.M{"textId": eventID}).One(&result); err != nil {
 		fmt.Println(result)
 		responseError(w, err.Error(), http.StatusInternalServerError)
