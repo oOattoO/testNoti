@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Dockerized Posts</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <h1>Dockerized Posts</h1>
+  
+  <div id="posts"></div>
+  <button id="load">
+    Load mare
+  </button>
+  <script>
+    $(document).ready(function() {
+      var item = [];
+      var len = 5
+      
+      callApi(len)
+
+      function callApi(len) {
+        console.log(len)
+        
+        for (let index = len-4; index <= len; index++) {
+        $.get('http://localhost:8080/posts/'+index, (res) => {
+          item.push(res)
+          if(item.length == 5)
+            lenderItem(item)
+        });
+      }
+      }
+
+      function lenderItem(listItem) {
+        console.log(listItem)
+        $list = $('#posts')
+          for (var i = 0; i < listItem.length; i++) {
+            $list.append('<p>' + listItem[i].textId + '</p>');
+            $list.append('<p>' + listItem[i].Tag + '</p>');
+            $list.append('<p>' + listItem[i].Title + '</p>');
+          }
+          item = [];
+      }
+
+      $("#load").click(function(){
+        callApi(len+5)
+  });
+
+    });
+  </script>
+</body>
+
+</html>
