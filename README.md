@@ -1,7 +1,5 @@
-# How to Keep Your Development Environment Clean
+# Start Web
 
-<p align="center">
-  <img src="./cover.jpg"/>
-</p>
+docker-compose up
 
-This is the underlying code for [How to Keep Your Development Environment Clean](https://outcrawl.com/clean-development-environment-docker/) article.
+[localhost:8081](http://localhost:8081/)
