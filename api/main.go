@@ -2,14 +2,10 @@ package main
 
 import (
 	"encoding/json"
-	// "io/ioutil"
 	"log"
 	"net/http"
 	"os"
-	// "time"
 	"fmt"
-	// "strconv"
-
 	"github.com/rs/cors"
 
 	"github.com/gorilla/mux"
@@ -21,13 +17,14 @@ type Post struct {
 	TextID      string    `json:"textId" bson:"textId"`
 	Tag string `json:tag bson:"tag"`
 	Title string `json:title bson:"title"`
+	Image string `json:image bson:"image"`
 }
 
 var posts *mgo.Collection
 
 func main() {
 	// Connect to mongo
-	session, err := mgo.Dial("mongo:27017")
+	session, err := mgo.Dial("mongodb:27017")
 	if err != nil {
 		log.Fatalln(err)
 		log.Fatalln("mongo err")
@@ -37,7 +34,7 @@ func main() {
 	session.SetMode(mgo.Monotonic, true)
 
 	// Get posts collection
-	posts = session.DB("app").C("posts")
+	posts = session.DB("test").C("posts")
 
 	// Set up routes
 	r := mux.NewRouter()
